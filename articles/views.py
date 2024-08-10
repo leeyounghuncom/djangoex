@@ -40,3 +40,9 @@ def data_catch(request):
     }
     return render(request, "data_catch.html", context)
 # return render(request, "data_catch.html")
+
+def profile(request, username):
+		context = {
+				"username" : username,
+		}
+		return render(request, "profile.html", context)
