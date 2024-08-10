@@ -13,10 +13,6 @@ def index(request):
 # response = HttpResponse("<h1>Hello, Django!</h1>")
 # return response
 
-def users(request):
-    return render(request, "users.html")
-
-
 def hello(request):
     name = "희경"
     tags = ["파이썬", "장고", "html", "css", "js"]
@@ -40,9 +36,3 @@ def data_catch(request):
     }
     return render(request, "data_catch.html", context)
 # return render(request, "data_catch.html")
-
-def profile(request, username):
-		context = {
-				"username" : username,
-		}
-		return render(request, "profile.html", context)
