@@ -1,7 +1,6 @@
 from urllib import request
-from django.shortcuts import render
 from .models import Article
-
+from django.shortcuts import render, redirect
 
 # from django.http import HttpResponse
 
@@ -40,7 +39,7 @@ def data_catch(request):
 
 # return render(request, "data_catch.html")
 def articles(request):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by("create_at")
     context = {
         "articles": articles,
     }
@@ -59,7 +58,45 @@ def create(request):
     # 받은 데이터를 Article 모델을 이용해서 저장
     article = Article(title=title, content=content)
     article.save()
-    context = {
-        "article": article,
-    }
-    return render(request, "create.html", context)
+    # context = {
+    #     "article": article,
+    # }
+    # return render(request, "create.html", context)
+    # return redirect("articles")
+    return redirect("article_detail", article.id)
+
+
+	# title = request.POST.get("title")
+	# content = request.POST.get("content")
+	# article = Article(title=title, content=content)
+	# article.save()
+  # return redirect("article_detail", article.id)
+
+def article_detail(request, pk):
+  article = Article.objects.get(pk=pk)
+  context = {
+      "article": article,
+  }
+  return render(request, "article_detail.html", context)
+
+def delete(request, pk):
+  article = Article.objects.get(pk=pk)
+  if request.method == "POST":
+      article.delete()
+      return redirect("articles")
+  return redirect("article_detail", article.pk)
+
+
+def edit(request, pk):
+	article = Article.objects.get(pk=pk)
+	context = {
+	    "article": article,
+	}
+	return render(request, "edit.html", context)
+
+def update(request, pk):
+  article = Article.objects.get(pk=pk)
+  article.title = request.POST.get("title")
+  article.content = request.POST.get("content")
+  article.save()
+  return redirect("article_detail", article.pk)
