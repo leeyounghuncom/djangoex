@@ -1,8 +1,12 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
+    <img src="">
+    <img src="{% static "123.jpg" %}" alt="teby">
     <ul>
 {#        <li><a href="{% url 'hello' %}">Hello</a></li>#}
-        <li><a href="{% url 'throw' %}">Throw</a></li>
-        <li><a href="{% url 'new' %}">글쓰기</a></li>
+        <li><a href="{% url 'articles:throw' %}">Throw</a></li>
+        <li><a href="{% url 'articles:articles' %}">목록 보기</a></li>
+
     </ul>
 {% endblock content %}
